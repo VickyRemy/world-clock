@@ -69,26 +69,29 @@
         World Clock
     </h1>
 
-    <select>
+    <select id="city">
         <option value="">Select a city...</option>
-        <option value="">Cape Town</option>
-        <option value="">Paris</option>
+        <option value="Asia/Seoul">Seoul</option>
+        <option value="Australia/Sydney">Sydney</option>
+        <option value="Europe/London">London</option>
     </select>
 
+    <div id="cities">
     <div class="city" id="cape-town">
         <div>
         <h2>Cape Town</h2>
-        <div class="date">September 20th 2025</div>
+        <div class="date"></div>
     </div>
-    <div class="time">09:27:15 <small> PM </small> </div>
+    <div class="time"></div>
     </div>
     <div class="city" id="paris">
         <div>
         <h2>Paris</h2>
-        <div class="date">September 20th 2025</div>
+        <div class="date"></div>
     </div>
-    <div class="time">09:27:15 <small> PM </small> </div>
+    <div class="time"></div>
      </div>
+    </div>
     </div>
 
     <footer>
@@ -96,26 +99,48 @@
     </footer>
     <script> 
         function updateTime () {
-        let capeTownElement = document.querySelector("#cape-town");
-        let capeTownDateElement = capeTownElement.querySelector(".date");
-        let capeTownTimeElement = capeTownElement.querySelector(".time");
-        let capeTownTime = moment().tz("Africa/Johannesburg");
 
-        capeTownDateElement.innerHTML = capeTownTime.format('MMMM Do YYYY');
-        capeTownTimeElement.innerHTML = capeTownTime.format("h:mm:ss [<small>]A[</small>]");
+        let capeTownElement = document.querySelector("#cape-town");
+        if (capeTownElement) {  
+         let capeTownDateElement = capeTownElement.querySelector(".date");
+         let capeTownTimeElement = capeTownElement.querySelector(".time");
+         let capeTownTime = moment().tz("Africa/Johannesburg");
+
+         capeTownDateElement.innerHTML = capeTownTime.format('MMMM Do YYYY');
+         capeTownTimeElement.innerHTML = capeTownTime.format("h:mm:ss [<small>]A[</small>]");
+        }
 
         
         let parisElement = document.querySelector("#paris");
-        let parisDateElement = parisElement.querySelector(".date");
-        let parisTimeElement = parisElement.querySelector(".time");
-        let parisTime = moment().tz("Europe/Paris");
+        if (parisElement) {    
+         let parisDateElement = parisElement.querySelector(".date");
+         let parisTimeElement = parisElement.querySelector(".time");
+         let parisTime = moment().tz("Europe/Paris");
 
-        parisDateElement.innerHTML = parisTime.format('MMMM Do YYYY');
-        parisTimeElement.innerHTML = parisTime.format("h:mm:ss [<small>]A[</small>]");
-        }
+         parisDateElement.innerHTML = parisTime.format('MMMM Do YYYY');
+         parisTimeElement.innerHTML = parisTime.format("h:mm:ss [<small>]A[</small>]");
+        }}
+
+        function updateCity(event) {
+          let cityTimeZone = event.target.value;
+          let cityName = cityTimeZone.replace("_"," ").split("/")[1];
+          let cityTime = moment().tz(cityTimeZone);
+          let citiesElement = document.querySelector("#cities");
+          citiesElement.innerHTML = `
+        <div class="city">
+        <div>
+        <h2>${cityTimeZone}</h2>
+        <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
+    </div>
+    <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format("A")}</small</div>
+    </div>
+    `;
+   }
         updateTime ();
         setInterval(updateTime, 1000);
 
+        let citiesSelectElement = document.querySelector("#city");
+        citiesSelectElement.addEventListener("change", updateCity);
     </script>
 </body>
 </html>
