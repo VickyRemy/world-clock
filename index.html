@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vicky's World-Clock</title>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.6.0/moment-timezone-with-data-1970-2030.min.js"></script>
 
+    <title>Vicky's World-Clock</title>
     <style>
         body {
             background-color: #f9f7fe;
@@ -27,7 +29,13 @@
         }
         .city {
             display: flex;
+            margin: 10px 0;
             justify-content: space-between;
+            padding: 30px 0;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+        }
+        .city:last-child {
+            border: none;
         }
         .time {
             font-size: 48px;
@@ -36,7 +44,7 @@
         .time small {
             font-size: 24px;
             vertical-align: middle;
-            line-height: 36px;
+            line-height: 48px;
         }
         select {
             display: block;
@@ -50,6 +58,8 @@
         }
         footer {
             text-align: center;
+            font-size: 18px;
+            color: rgba(0, 0, 0, 0.8)
         }
     </style>
 </head>
@@ -61,20 +71,19 @@
 
     <select>
         <option value="">Select a city...</option>
-        <option value="">Pretoria</option>
-        <option value="">Seoul</option>
-        <option value="">Sydney</option>
+        <option value="">Cape Town</option>
+        <option value="">Paris</option>
     </select>
 
-    <div class="city">
-        <h2>Ontario</h2>
+    <div class="city" id="cape-town">
+        <div>
+        <h2>Cape Town</h2>
         <div class="date">September 20th 2025</div>
     </div>
     <div class="time">09:27:15 <small> PM </small> </div>
-     </div>
     </div>
-    
-    <div class="city">
+    <div class="city" id="paris">
+        <div>
         <h2>Paris</h2>
         <div class="date">September 20th 2025</div>
     </div>
@@ -85,5 +94,28 @@
     <footer>
         This project was coded by Vicky and is<a href="https://github.com/VickyRemy/world-clock" target="_blank"> open-sourced on Github</a>
     </footer>
+    <script> 
+        function updateTime () {
+        let capeTownElement = document.querySelector("#cape-town");
+        let capeTownDateElement = capeTownElement.querySelector(".date");
+        let capeTownTimeElement = capeTownElement.querySelector(".time");
+        let capeTownTime = moment().tz("Africa/Johannesburg");
+
+        capeTownDateElement.innerHTML = capeTownTime.format('MMMM Do YYYY');
+        capeTownTimeElement.innerHTML = capeTownTime.format("h:mm:ss [<small>]A[</small>]");
+
+        
+        let parisElement = document.querySelector("#paris");
+        let parisDateElement = parisElement.querySelector(".date");
+        let parisTimeElement = parisElement.querySelector(".time");
+        let parisTime = moment().tz("Europe/Paris");
+
+        parisDateElement.innerHTML = parisTime.format('MMMM Do YYYY');
+        parisTimeElement.innerHTML = parisTime.format("h:mm:ss [<small>]A[</small>]");
+        }
+        updateTime ();
+        setInterval(updateTime, 1000);
+
+    </script>
 </body>
 </html>
