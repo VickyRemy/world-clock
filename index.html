@@ -90,9 +90,9 @@
     </div>
     <div class="time"></div>
     </div>
-    <div class="city" id="paris">
+    <div class="city" id="shanghai">
         <div>
-        <h2>Paris</h2>
+        <h2>Shanghai</h2>
         <div class="date"></div>
     </div>
     <div class="time"></div>
@@ -118,14 +118,14 @@
         }
 
         
-        let parisElement = document.querySelector("#paris");
-        if (parisElement) {    
-         let parisDateElement = parisElement.querySelector(".date");
-         let parisTimeElement = parisElement.querySelector(".time");
-         let parisTime = moment().tz("Europe/Paris");
+        let shanghaiElement = document.querySelector("#shanghai");
+        if (shanghaiElement) {    
+         let shanghaiDateElement = shanghaiElement.querySelector(".date");
+         let shanghaiTimeElement = shanghaiElement.querySelector(".time");
+         let shanghaiTime = moment().tz("Asia/Shanghai");
 
-         parisDateElement.innerHTML = parisTime.format('MMMM Do YYYY');
-         parisTimeElement.innerHTML = parisTime.format("h:mm:ss [<small>]A[</small>]");
+         shanghaiDateElement.innerHTML = shanghaiTime.format('MMMM Do YYYY');
+         shanghaiTimeElement.innerHTML = shanghaiTime.format("h:mm:ss [<small>]A[</small>]");
         }}
 
         function updateCity(event) {
